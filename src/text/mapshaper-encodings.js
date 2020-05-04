@@ -53,18 +53,9 @@ export function bufferToString(buf, enc, start, end) {
 }
 
 function getNativeEncoder(enc) {
-  var encoder = null;
   enc = standardizeEncodingName(enc);
-  if (enc != 'utf8') {
-    // TODO: support more encodings if TextEncoder is available
-    return null;
-  }
-  if (typeof TextEncoder != 'undefined') {
-    encoder = new TextEncoder(enc);
-  }
   return function(str) {
-    // Convert Uint8Array from encoder to Buffer (fix for issue #216)
-    return encoder ? Buffer.from(encoder.encode(str).buffer) : utils.createBuffer(str, enc);
+    return utils.createBuffer(str, enc);
   };
 }
 
