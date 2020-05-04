@@ -71,17 +71,9 @@ export function encodeString(str, enc) {
 }
 
 function getNativeDecoder(enc) {
-  var decoder = null;
   enc = standardizeEncodingName(enc);
-  if (enc != 'utf8') {
-    // TODO: support more encodings if TextDecoder is available
-    return null;
-  }
-  if (typeof TextDecoder != 'undefined') {
-    decoder = new TextDecoder(enc);
-  }
   return function(buf) {
-    return decoder ? decoder.decode(buf) : buf.toString(enc);
+    return buf.toString(enc);
   };
 }
 
